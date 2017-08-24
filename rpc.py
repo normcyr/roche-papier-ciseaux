@@ -1,8 +1,13 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+'''
+Version québécoise de pierre-papier-ciseaux.
+'''
+
 import random
 from sys import argv
+import argparse
 
 def enregistrerChoixHumain(argv):
 
@@ -60,11 +65,20 @@ def main():
 
     possibilites = ['roche', 'papier', 'ciseaux']
 
-    choixHumain = enregistrerChoixHumain(argv)
-    choixOrdi = mainOrdi(possibilites)
-    gagnant = trouverGagnant(choixHumain, choixOrdi)
+    parser = argparse.ArgumentParser(description = 'Essaie de gagner à roche-papier-ciseaux contre l\'ordinateur')
+    parser.add_argument('choix', help = 'inscris une option: roche OU papier OU ciseaux')
+    args = parser.parse_args()
 
-    resultats(choixHumain, choixOrdi, gagnant)
+    if args.choix is not None:
+
+        if args.choix in possibilites:
+            choixHumain = enregistrerChoixHumain(argv)
+            choixOrdi = mainOrdi(possibilites)
+            gagnant = trouverGagnant(choixHumain, choixOrdi)
+            resultats(choixHumain, choixOrdi, gagnant)
+
+        else:
+            print('Choix impossible')
 
 if __name__ == '__main__':
     main()
